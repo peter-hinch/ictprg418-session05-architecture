@@ -57,6 +57,7 @@ namespace Session05Architecture
             }
             */
             // Class exercise: Access environment variables from a JSON file.
+            // Reference: https://makolyte.com/csharp-how-to-read-custom-configuration-from-appsettings-json/
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("config.json")
