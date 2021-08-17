@@ -46,7 +46,7 @@ namespace Session05Architecture
             // Class exercise answer provided:
             // Create a variable called configuration containing an array of
             // key value pairs.
-
+            /*
             var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
@@ -55,9 +55,19 @@ namespace Session05Architecture
             {
                 app.UseDeveloperExceptionPage();
             }
+            */
+            // Class exercise: Access environment variables from a JSON file.
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("config.json")
+                .Build();
+            if (configuration.GetValue<bool>("EnableDeveloperExceptions"))
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             // Default code:
-            
+
             // Search for an endpoint using routing methods
             app.UseRouting(); 
 
