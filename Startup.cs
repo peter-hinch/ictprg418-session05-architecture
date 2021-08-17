@@ -69,10 +69,15 @@ namespace Session05Architecture
             if (configuration.GetValue<bool>("EnableDeveloperExceptions"))
             {
                 app.UseDeveloperExceptionPage();
+            } else
+            {
+                // Use an exception handler to show an error page when
+                // EnableDeveloperExceptions is set to false.
+                app.UseExceptionHandler("/error.html");
             }
 
             // Default code:
-
+            /*
             // Search for an endpoint using routing methods
             app.UseRouting(); 
 
@@ -91,7 +96,7 @@ namespace Session05Architecture
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
-
+            */
             // Without endpoints, a similar result can be achieved by the following:
             // When multiple middleware are required, use app.Use() and await.Next()
             // to execute all items.
@@ -114,19 +119,18 @@ namespace Session05Architecture
             */
 
             // Class exercise answer provided:
-            /*
+            
             app.Use(async (context, next) =>
             {
                 if(context.Request.Path.Value.Contains("/invalid"))
                 {
-                    throw new Exception();
+                        throw new Exception();
                 }
-                await context.Response.WriteAsync("Hello Planet #1!");
+                //await context.Response.WriteAsync("Hello Planet #1!");
 
                 // Move to the next item.
                 await next();
             });
-            */
 
             // You can run static pages from the wwwroot folder using
             // app.UseFileServer().
