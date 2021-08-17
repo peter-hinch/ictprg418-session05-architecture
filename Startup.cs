@@ -19,6 +19,7 @@ namespace Session05Architecture
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // The function acts as middleware
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -26,14 +27,38 @@ namespace Session05Architecture
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            /*
+            // Search for an endpoint using routing methods
+            app.UseRouting(); 
 
             app.UseEndpoints(endpoints =>
             {
+                // Map an endpoint to a URL
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+            });
+            */
+
+            // Without endpoints, a similar result can be achieved by the following:
+            // When multiple middleware are required, use app.Use() and await.Next()
+            // to execute all items.
+            // Reference: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-5.0
+            
+            // This is the first middleware in the pipeline
+            app.Use(async (context, next) => 
+            {
+                await context.Response.WriteAsync("Hello Planet #1!");
+                    
+                // Move to the next item.
+                await next();
+            });
+
+            // This is the second middleware in the pipeline
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("\nHello Planet #2!");
             });
         }
     }
