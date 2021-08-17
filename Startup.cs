@@ -46,7 +46,7 @@ namespace Session05Architecture
             // to execute all items.
             // Reference: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-5.0
             
-            // This is the first middleware in the pipeline
+            // This is the first middleware in the pipeline.
             app.Use(async (context, next) => 
             {
                 await context.Response.WriteAsync("Hello Planet #1!");
@@ -55,7 +55,7 @@ namespace Session05Architecture
                 await next();
             });
 
-            // This is the second middleware in the pipeline
+            // This is the second middleware in the pipeline.
             app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("\nHello Planet #2!");
