@@ -50,18 +50,22 @@ namespace Session05Architecture
             var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
-            // Test for the value of the "EnableDeveloperExceptions" key
-            if(configuration.GetValue<bool>("EnableDeveloperExceptions"))
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            */
+
             // Class exercise: Access environment variables from a JSON file.
             // Reference: https://makolyte.com/csharp-how-to-read-custom-configuration-from-appsettings-json/
+            /*
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 .AddJsonFile("config.json")
                 .Build();
+            */
+            // Provided solution for the JSON file exercise:
+            var configuration = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                // We can get the content root from out env object
+                .AddJsonFile(env.ContentRootPath + "/config.json") 
+                .Build();
+            // Test for the value of the "EnableDeveloperExceptions" key
             if (configuration.GetValue<bool>("EnableDeveloperExceptions"))
             {
                 app.UseDeveloperExceptionPage();
