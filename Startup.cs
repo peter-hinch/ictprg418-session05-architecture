@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -26,7 +27,7 @@ namespace Session05Architecture
 
             // This checks if the environment variable 'ASPNETCORE_ENVIRONMENT'
             // is set to 'Development'. If so, allow debugging information when
-            // an exception is thrown
+            // an exception is thrown.
             /*
             if (env.IsDevelopment())
             {
@@ -34,14 +35,28 @@ namespace Session05Architecture
             }
             */
             // Class exercise - access an environment variable to perform the
-            // same function as above 
+            // same function as above.
+            /*
             if (String.Compare(Environment.GetEnvironmentVariable("EnableDeveloperExceptions"), "True") == 0)
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            */
+            // Class exercise answer provided:
+            // Create a variable called configuration containing an array of
+            // key value pairs.
+            
+            var configuration = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .Build();
+            // Test for the value of the "EnableDeveloperExceptions" key
+            if(configuration["EnableDeveloperExceptions"]=="True")
             {
                 app.UseDeveloperExceptionPage();
             }
 
             // Default code:
-            /*
+            
             // Search for an endpoint using routing methods
             app.UseRouting(); 
 
@@ -60,7 +75,6 @@ namespace Session05Architecture
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
-            */
 
             // Without endpoints, a similar result can be achieved by the following:
             // When multiple middleware are required, use app.Use() and await.Next()
@@ -84,6 +98,7 @@ namespace Session05Architecture
             */
 
             // Class exercise answer provided:
+            /*
             app.Use(async (context, next) =>
             {
                 if(context.Request.Path.Value.Contains("/invalid"))
@@ -95,6 +110,7 @@ namespace Session05Architecture
                 // Move to the next item.
                 await next();
             });
+            */
 
             // You can run static pages from the wwwroot folder using
             // app.UseFileServer().
