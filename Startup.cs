@@ -124,9 +124,8 @@ namespace Session05Architecture
             {
                 if(context.Request.Path.Value.Contains("/invalid"))
                 {
-                        throw new Exception();
+                    throw new Exception();
                 }
-                //await context.Response.WriteAsync("Hello Planet #1!");
 
                 // Move to the next item.
                 await next();
