@@ -27,25 +27,32 @@ namespace Session05Architecture
                 app.UseDeveloperExceptionPage();
             }
 
-            /*
+            // Default code:
+
             // Search for an endpoint using routing methods
             app.UseRouting(); 
 
             app.UseEndpoints(endpoints =>
             {
                 // Map an endpoint to a URL
+                endpoints.MapGet("/invalid", async context =>
+                {
+                    // Entering a URL of /invalid will throw an exception
+                    throw new Exception();
+                    await context.Response.WriteAsync("Spanner to my plans!");
+                });
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
-            */
+
 
             // Without endpoints, a similar result can be achieved by the following:
             // When multiple middleware are required, use app.Use() and await.Next()
             // to execute all items.
             // Reference: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-5.0
-            
+            /*
             // This is the first middleware in the pipeline.
             app.Use(async (context, next) => 
             {
@@ -60,6 +67,11 @@ namespace Session05Architecture
             {
                 await context.Response.WriteAsync("\nHello Planet #2!");
             });
+            */
+
+            // You can run static pages from the wwwroot folder using
+            // app.UseFileServer().
+            app.UseFileServer();
         }
     }
 }
