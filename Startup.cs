@@ -36,6 +36,7 @@ namespace Session05Architecture
             */
             // Class exercise - access an environment variable to perform the
             // same function as above.
+            // Reference: https://docs.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-5.0
             /*
             if (String.Compare(Environment.GetEnvironmentVariable("EnableDeveloperExceptions"), "True") == 0)
             {
@@ -45,12 +46,12 @@ namespace Session05Architecture
             // Class exercise answer provided:
             // Create a variable called configuration containing an array of
             // key value pairs.
-            
+
             var configuration = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
             // Test for the value of the "EnableDeveloperExceptions" key
-            if(configuration["EnableDeveloperExceptions"]=="True")
+            if(configuration.GetValue<bool>("EnableDeveloperExceptions"))
             {
                 app.UseDeveloperExceptionPage();
             }
